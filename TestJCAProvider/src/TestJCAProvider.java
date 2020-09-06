@@ -4,22 +4,22 @@ import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.Security;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+
 import javax.crypto.Cipher;
 
 import src.paillier.crypto.PaillierProvider;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 /**
  * This class has a testing purpose. It aims to test the JCA PaillierProvider.
  * Both implementation of Cipher are tested.
  */
 
-@SuppressWarnings("restriction")
 public class TestJCAProvider {
 
 	private static final String DELIMITER = "[,]";
-	
+
 	public static void main(String[] args) throws Exception {
 
 		TestJCAProvider test = new TestJCAProvider();
@@ -32,17 +32,17 @@ public class TestJCAProvider {
 		KeyPair keyPair = kpg.generateKeyPair();
 		PublicKey pubKey = keyPair.getPublic();
 		PrivateKey privKey = keyPair.getPrivate();
-		
+
 		final Cipher cipher = Cipher.getInstance("Paillier");
 		final Cipher cipherHP = Cipher.getInstance("PaillierHP");
-		
+
 		System.err.println("The Paillier public key through Generator is \n" + keyPair.toString());
 		System.err.println("The Paillier public key is \n" + keyPair.getPublic().toString());
 		System.err.println("The Paillier private key is \n" + keyPair.getPrivate().toString());
 		String plainText = "101";
 		String plaintext1 = "101";
 		// get the n
-		
+
 		String[] keyComponents = pubKey.toString().split(DELIMITER);
 		String keyComponent = "";
 		for (String component : keyComponents) {
@@ -97,7 +97,7 @@ public class TestJCAProvider {
 		final BASE64Encoder encoder = new BASE64Encoder();
 		final String base64 = encoder.encode(cipherText);
 		final byte[] encryptedBytes = base64.getBytes();
-		
+
 		return encryptedBytes;
 	}
 
@@ -121,7 +121,7 @@ public class TestJCAProvider {
 	 * @return String in Hex form with ":" between every two symbols
 	 */
 	public static String formatingHexRepresentation(final byte[] codedBytes) {
-		
+
 		String hexRepresentation = "";
 		String eye;
 		for (int i = 0; i < codedBytes.length; i++) {
@@ -131,7 +131,7 @@ public class TestJCAProvider {
 				hexRepresentation += ":";
 			}
 		}
-		
+
 		return hexRepresentation;
 	}
 
@@ -168,11 +168,11 @@ public class TestJCAProvider {
 	 * @return String the converted byte
 	 */
 	public static String byteToHex(byte data) {
-		
+
 		StringBuffer buf = new StringBuffer();
 		buf.append(toHexChar((data >>> 4) & 0x0F));
 		buf.append(toHexChar(data & 0x0F));
-		
+
 		return buf.toString();
 	}
 
@@ -183,7 +183,7 @@ public class TestJCAProvider {
 	 * @return char the converted char
 	 */
 	public static char toHexChar(int i) {
-		
+
 		if ((0 <= i) && (i <= 9)) {
 			return (char) ('0' + i);
 		} else {
